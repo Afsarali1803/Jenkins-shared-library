@@ -25,7 +25,7 @@ def call() {
                 }
             } 
 
-            stage('XYZ Checks') {
+            stage('ABC Checks') {
                 steps {
                     sh "echo Performing XYZ Checks"
                     sh "echo this takes 30 mins"
