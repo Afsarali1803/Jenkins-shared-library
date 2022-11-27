@@ -10,7 +10,6 @@ def lintChecks() {
 def call() {
     pipeline{
         agent any
-        } 
         stages {
             stage('Lint Checks') {
                 steps {
@@ -34,3 +33,4 @@ def call() {
             } 
         }   // end of stages 
     }  // end of pipelines
+}//end of call
