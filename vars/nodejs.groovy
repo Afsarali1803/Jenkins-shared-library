@@ -2,7 +2,7 @@ def lintChecks(COMPONENT) {
         sh "echo installing jslinst"
         sh "npm i jslint"   
         sh "node_modules/jslint/bin/jslint.js server.js || true"
-        sh "echo Lint Checks Completed ($COMPONENT) "
+        sh "echo Lint Checks Completed $COMPONENT "
 }
 
 // call is the function which will be called by default.
