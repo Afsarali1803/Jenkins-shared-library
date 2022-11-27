@@ -7,7 +7,7 @@ def lintChecks() {
 def call() {
     pipeline{ 
         stages {
-            stage('Lint Checks') {
+            stage('lint Checks') {
                 steps {
                     script {
                         lintChecks()                  // Use script { when you're using groovy based conventions }
