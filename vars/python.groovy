@@ -15,14 +15,6 @@ def call() {
                 }
             }
 
-            stage('Sonar Checks') {
-                steps {
-                    script {
-                        common.sonarChecks()                  // Use script { when you're using groovy based conventions }
-                    }
-                }
-            }
-
         }   // end of stages 
     }  // end of pipelines
 } // end of call
