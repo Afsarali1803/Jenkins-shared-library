@@ -1,5 +1,5 @@
 def lintChecks() {
-    sh "mvn checkstyle:check || true"
+    sh "echo list checks started for payment * * * * ......"
     sh "echo Lint Checks Completed for $COMPONENT"
 }
 
@@ -7,7 +7,6 @@ def lintChecks() {
 def call() {
     pipeline{
         agent any 
-        } 
         stages {
             stage('Lint Checks') {
                 steps {
@@ -19,4 +18,4 @@ def call() {
 
         }   // end of stages 
     }  // end of pipelines
-// end of call
+}// end of call
