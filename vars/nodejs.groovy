@@ -7,7 +7,7 @@ def lintChecks() {
 
 // call is the function which will be called by default.
 // function call will be called by default, when you call the fileName
-def call(cart) {
+def call() {
     pipeline{
         agent any
         stages {
