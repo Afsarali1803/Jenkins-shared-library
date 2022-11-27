@@ -2,7 +2,7 @@ def lintChecks() {
         sh "echo installing jslinst"
         sh "npm i jslint"   
         sh "node_modules/jslint/bin/jslint.js server.js || true"
-        sh "echo Lint Checks Completed for "
+        sh "echo Lint Checks Completed  "
 }
 
 // call is the function which will be called by default.
@@ -19,7 +19,6 @@ def call() {
                     }
                 }
             }   
-
             stage('XYZ Checks') {
                 steps {
                     sh "echo Performing XYZ Checks"
