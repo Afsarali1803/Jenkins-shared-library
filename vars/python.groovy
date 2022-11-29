@@ -6,8 +6,9 @@ def lintChecks() {
 // function call will be called by default, when you call the fileName
 def call() {
     pipeline{ 
+        agent any
         stages {
-            stage('lint Checks') {
+            stage('Lint Checks') {
                 steps {
                     script {
                         lintChecks()                  // Use script { when you're using groovy based conventions }
