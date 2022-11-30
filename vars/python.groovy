@@ -27,7 +27,6 @@ def call() {
                     }
                 }
             } 
-
             stage('Test Cases') {
                 parallel {
                     stage('Unit Testing') {                 
