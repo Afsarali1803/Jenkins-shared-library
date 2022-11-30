@@ -46,6 +46,13 @@ def call() {
                             }
                         }         
                     }
+                    
+                    stage('ABC Checks') {
+                        steps {
+                            sh "echo Performing XYZ Checks"
+                            sh "echo this takes 30 mins"
+                        }
+                    }
         }
    // end of stages 
     }  // end of pipelines
