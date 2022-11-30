@@ -30,6 +30,26 @@ def call() {
                 }
             } 
 
+            stage('Test Cases') {
+                parallel {
+                    stage('Unit Testing') {                 
+                        steps {
+                            sh "echo Unit Testing Completed"   
+                                }
+                            }
+                    stage('Integration Testing') {                 
+                        steps {
+                            sh "echo Integration Testing Completed"   
+                                }
+                            }
+                    stage('Function Testing') {                 
+                        steps {
+                            sh "echo Function Testing Completed"   
+                                }
+                            }
+                        }         
+                    }
+
             stage('ABC Checks') {
                 steps {
                     sh "echo Performing XYZ Checks"
