@@ -22,7 +22,7 @@ def call() {
             stage('Sonar Checks') {
                 steps {
                     script {
-                        env.ARGS="-Dsonar.sources=."
+                        env.ARGS="-Dsonar.java.binaries=target/"
                         common.sonarChecks()                  // Use script { when you're using groovy based conventions }
                     }
                 }
