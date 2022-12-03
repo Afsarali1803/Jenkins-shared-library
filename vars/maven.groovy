@@ -10,23 +10,23 @@ def call() {
         environment {
             SONAR    = credentials('SONAR')
             SONARURL = "172.31.10.167"
-        }
+                    }
         stages {
             stage('Lint Checks') {
                 steps {
                     script {
                         lintChecks()                  // Use script { when you're using groovy based conventions }
-                    }
-                }
-            }   
+                            }
+                        }
+                    }   
             stage('Sonar Checks') {
                 steps {
                     script {
                         env.ARGS="-Dsonar.java.binaries=target/"
                         common.sonarChecks()                  // Use script { when you're using groovy based conventions }
-                    }
-                }
-            } 
+                            }
+                        }
+                    } 
 
             stage('Test Cases') {
                 parallel {
@@ -45,9 +45,16 @@ def call() {
                             sh "echo Function Testing Completed"   
                                 }
                             }
-                        }         
+                        }
                     }
-
-        }   // end of stages 
+            stage('Versioning the artifacts') {
+                    steps {
+                        sh "echo Versioning the artifacts"
+                            }
+                        }                
+            }
+        
     }  // end of pipelines
 }// end of call
+
+
