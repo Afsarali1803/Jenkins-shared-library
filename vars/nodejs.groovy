@@ -51,19 +51,20 @@ def call() {
                             }
                         }         
                     }
-            // stage('Chekcing Artifacts') {
-            //      when { expression { env.TAG_NAME != null } }
-            //      steps {
-            //          script {
-            //              env.UPLOAD_STATUS=sh(returnStdout: true, script: 'curl -L -s http://${NEXUSURL}:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip ||  true' )
-            //              print UPLOAD_STATUS
-            //          }
-            //      }
-            // }
+
+            stage('Chekcing Artifacts') {
+                when { expression { env.TAG_NAME != null } }
+                steps {
+                    script {
+                        env.UPLOAD_STATUS=sh(returnStdout: true, script: 'curl -L -s http://${NEXUSURL}:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip ||  true' )
+                        print UPLOAD_STATUS
+                      }
+                  }
+             }
 
             stage('Prepare Artifacts') {
-                when { expression { env.TAG_NAME != null } } 
-            //        expression { env.UPLOAD_STATUS == "" } 
+                when { expression { env.TAG_NAME != null } 
+                       expression { env.UPLOAD_STATUS == "" } }
                 steps {
                     sh "npm install"
                     sh "zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
@@ -72,8 +73,8 @@ def call() {
             }
 
             stage('Uploading Artifacts') {
-                when { expression { env.TAG_NAME != null } }
-                //    expression { env.UPLOAD_STATUS == "" }
+                when { expression { env.TAG_NAME != null } 
+                       expression { env.UPLOAD_STATUS == "" } }
                 steps {
                     sh "echo Uploading started."
                     sh "echo ${TAG_NAME}"
