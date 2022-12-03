@@ -23,14 +23,14 @@ def call() {
                     }
                 }
             }   
-            stage('Sonar Checks') {
-                steps {
-                    script {
-                        env.ARGS="-Dsonar.sources=."
-                        common.sonarChecks()                  // Use script { when you're using groovy based conventions }
-                    }
-                }
-            } 
+            // stage('Sonar Checks') {
+            //     steps {
+            //         script {
+            //             env.ARGS="-Dsonar.sources=."
+            //             common.sonarChecks()                  // Use script { when you're using groovy based conventions }
+            //         }
+            //     }
+            // } 
 
             stage('Test Cases') {
                 parallel {
