@@ -11,7 +11,9 @@ def call() {
         agent any
         environment {
             SONAR    = credentials('SONAR')
+            NEXUS   = credentials('NEXUS')
             SONARURL = "172.31.10.167"
+            NEXUSURL = "172.31.4.161"
         }
         stages {
             stage('Lint Checks') {
@@ -70,15 +72,15 @@ def call() {
                 }
             }
 
-            // stage('Uploading Artifacts') {
-            //     when { 
-            //         expression { env.TAG_NAME != null } 
-            //         expression { env.UPLOAD_STATUS == "" } 
-            //     }
-            //     steps {
-            //         sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUSURL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
-            //     }
-            //  }
+            stage('Uploading Artifacts') {
+                when { 
+                    expression { env.TAG_NAME != null } 
+                    expression { env.UPLOAD_STATUS == "" } 
+                }
+                steps {
+                    sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUSURL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                }
+              }
 
             stage('ABC Checks') {
                 steps {
