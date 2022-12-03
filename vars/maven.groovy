@@ -15,7 +15,7 @@ def call() {
             stage('Lint Checks') {
                 steps {
                     script {
-                        lintChecks()                  // Use script { when you're using groovy based conventions }
+                        common.lintChecks()                  // Use script { when you're using groovy based conventions }
                             }
                         }
                     }   
