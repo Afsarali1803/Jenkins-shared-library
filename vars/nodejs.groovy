@@ -62,10 +62,8 @@ def call() {
             // }
 
             stage('Prepare Artifacts') {
-                when { 
-                    expression { env.TAG_NAME != null } 
+                when { expression { env.TAG_NAME != null } } 
             //        expression { env.UPLOAD_STATUS == "" } 
-                }
                 steps {
                     sh "npm install"
                     sh "zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
@@ -73,14 +71,12 @@ def call() {
             }
 
             stage('Uploading Artifacts') {
-                when { 
-                    expression { env.TAG_NAME != null } 
-                //    expression { env.UPLOAD_STATUS == "" } 
-                }
+                when { expression { env.TAG_NAME != null } }
+                //    expression { env.UPLOAD_STATUS == "" }
                 steps {
                     sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUSURL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
-                }
-              }
+                    }
+               }
 
             stage('ABC Checks') {
                 steps {
