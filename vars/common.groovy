@@ -52,7 +52,62 @@ def testCases() {
                            }
                     },
                 )
-        }   
+        }  
+
+def artifacts() {
+        stage('Check Artifacts') {
+           env.UPLOAD_STATUS=sh(returnStdout: true, script: 'curl -L -s http://${NEXUSURL}:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip ||  true' )
+           print UPLOAD_STATUS                
+        }
+        
+        if(env.UPLOAD_STATUS == "") {
+                stage('Prepare Artifacts'){
+                  if(env.APPTYPE == "nodejs") {
+                        sh '''
+                            npm install
+                            zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
+                           
+                           '''
+                        }
+                  else if(env.APPTYPE == "maven") {
+                        sh '''
+                            mvn clean package
+                            mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar
+                            zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}.jar
+                           
+                           ''' 
+
+                        }
+                  else if(env.APPTYPE == "python") {
+                        sh ''' 
+                                zip -r ${COMPONENT}-${TAG_NAME}.zip *.py *.ini requirements.txt
+                           ''' 
+
+                        }
+                  else if(env.APPTYPE == "angularjs") {
+                        sh '''  
+                                cd static 
+                                zip -r ../${COMPONENT}-${TAG_NAME}.zip *
+                                ls -ltr
+                        '''
+
+                        }
+                  else  {
+                        sh ''' 
+                                echo GOLANG Assignment
+                           ''' 
+
+                        }
+                }
+
+                stage('Upload Artifacts') {
+                        withCredentials([usernamePassword(credentialsId: 'NEXUS', passwordVariable: 'NEXUS_PSW', usernameVariable: 'NEXUS_USR')]) {              
+                                 sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUSURL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"  
+                        }
+                }
+        }
+}
+
         
 
 
