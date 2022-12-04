@@ -5,6 +5,10 @@ def call() {
         env.ARGS="-Dsonar.java.binaries=target/"
         common.sonarChecks()   
         common.testCases()
+        env.SONARURL = "172.31.10.167"
+        env.NEXUSURL = "172.31.4.161"
+        if(env.TAG_NAME != null ) {
+            common.artifacts()
     }
 }
 // def lintChecks() {
