@@ -63,43 +63,21 @@ def artifacts() {
         if(env.UPLOAD_STATUS == "") {
                 stage('Prepare Artifacts'){
                   if(env.APPTYPE == "nodejs") {
-                        sh '''
-                            npm install
-                            zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
-                           
-                           '''
+                        sh "echo nodejs"
                         }
                   else if(env.APPTYPE == "maven") {
-                        sh '''
-                            mvn clean package
-                            mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar
-                            zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}.jar
-                           
-                           ''' 
-
+                        sh  "echo maven"
                         }
                   else if(env.APPTYPE == "python") {
-                        sh ''' 
-                                zip -r ${COMPONENT}-${TAG_NAME}.zip *.py *.ini requirements.txt
-                           ''' 
-
+                        sh  "echo python"
                         }
                   else if(env.APPTYPE == "angularjs") {
-                        sh '''  
-                                cd static 
-                                zip -r ../${COMPONENT}-${TAG_NAME}.zip *
-                                ls -ltr
-                        '''
-
+                        sh "echo Angular"
                         }
                   else  {
-                        sh ''' 
-                                echo GOLANG Assignment
-                           ''' 
-
+                        sh "echo lang"
                         }
                 }
-
                 stage('Upload Artifacts') {
                         withCredentials([usernamePassword(credentialsId: 'NEXUS', passwordVariable: 'NEXUS_PSW', usernameVariable: 'NEXUS_USR')]) {              
                                  sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUSURL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"  
